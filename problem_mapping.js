@@ -136,7 +136,7 @@ problem_mapping = {
                 "total": 20000
             },
             "Python: is_number_palindromic.py": {
-                "passed": 0,
+                "passed": 20000,
                 "total": 20000
             }
         },
@@ -150,7 +150,7 @@ problem_mapping = {
                 "total": 7
             },
             "Python: uniform_random_number.py": {
-                "passed": 0,
+                "passed": 7,
                 "total": 7
             }
         },
