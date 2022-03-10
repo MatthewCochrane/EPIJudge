@@ -126,6 +126,13 @@ def intersect_rectangle(r1: Rect, r2: Rect) -> Rect:
 
     I did ok but way too slow.  I should repeat!
     Also tricky without being able to draw it.  A whiteboard would be helpful here.
+
+    Neat trick from the solution...
+    Checking that they *don't* intersect is easier!
+    I like my approach with the temporary variables better than theirs where they re-state the calculations
+    multiple times.
+
+    I should probably try the two variants too!
     """
 
     r1_top = r1.y + r1.height
