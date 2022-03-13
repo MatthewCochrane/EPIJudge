@@ -1,3 +1,4 @@
+import math
 from typing import List
 
 from test_framework import generic_test
@@ -37,14 +38,17 @@ def buy_and_sell_stock_once(prices: List[float]) -> float:
     One note: you ran through the edge cases only after writing the code.
     You should probably come up with edge case examples and run them through
     your pseudo code first instead!
+
+    The way they thought about it in the book was to have a min buy price rather
+    than keeping track of the index of the minimum.  This is another way to
+    think about it.  Very similar, perhaps slightly better.  See updated code below.
     """
     max_profit = 0
-    buy_idx = 0
+    min_buy = math.inf
     for sell_idx, sell_price in enumerate(prices):
-        profit = sell_price - prices[buy_idx]
+        profit = sell_price - min_buy
         max_profit = max(max_profit, profit)
-        if profit < 0:
-            buy_idx = sell_idx
+        min_buy = min(min_buy, sell_price)
     return max_profit
 
 
