@@ -404,7 +404,7 @@ problem_mapping = {
                 "total": 10
             },
             "Python: nonuniform_random_number.py": {
-                "passed": 0,
+                "passed": 10,
                 "total": 10
             }
         },
