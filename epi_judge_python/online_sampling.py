@@ -237,7 +237,7 @@ def online_random_sample(stream: Iterator[int], k: int) -> List[int]:
     Well I got there but it required some trial and error.....
     This is a good way to think about it.  Though I don't completely understand why it works.
     I should repeat this question!
-
+    Finished: 15:12 -> took over 2 hours!!!  Too long.
     """
     result = []
     for n, v in enumerate(stream):
