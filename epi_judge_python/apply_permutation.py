@@ -59,18 +59,15 @@ def apply_permutation(perm: List[int], A: List[int]) -> None:
             continue
         tmp = val
         prev_idx = i
-        while (next_idx := perm[prev_idx]) != i:
+        while (next_idx := perm[prev_idx]) >= 0:
             A[next_idx], tmp = tmp, A[next_idx]
-            perm[prev_idx] *= -1
-            perm[prev_idx] -= 1
+            perm[prev_idx] -= len(perm)
             prev_idx = next_idx
-        A[next_idx] = tmp
-        perm[prev_idx] *= -1
-        perm[prev_idx] -= 1
 
+    # Definitely cannot do slice assignment or we'd use extra space.
+    # The book does but pretty sure it's wrong.
     for i in range(len(perm)):
-        perm[i] += 1
-        perm[i] *= -1
+        perm[i] += len(perm)
 
 
 def apply_permutation_wrapper(perm, A):
