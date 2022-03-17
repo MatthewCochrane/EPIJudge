@@ -418,7 +418,7 @@ problem_mapping = {
                 "total": 745
             },
             "Python: is_valid_sudoku.py": {
-                "passed": 0,
+                "passed": 745,
                 "total": 745
             }
         },
