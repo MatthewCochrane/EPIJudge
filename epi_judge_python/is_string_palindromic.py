@@ -2,8 +2,7 @@ from test_framework import generic_test
 
 
 def is_palindromic(s: str) -> bool:
-    # TODO - you fill in here.
-    return True
+    return s == s[::-1]
 
 
 if __name__ == '__main__':
