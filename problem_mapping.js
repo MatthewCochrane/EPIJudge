@@ -446,7 +446,7 @@ problem_mapping = {
                 "total": 51
             },
             "Python: matrix_rotation.py": {
-                "passed": 0,
+                "passed": 51,
                 "total": 51
             }
         },
