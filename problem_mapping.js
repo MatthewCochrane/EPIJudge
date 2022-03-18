@@ -602,7 +602,7 @@ problem_mapping = {
                 "total": 10008
             },
             "Python: valid_ip_addresses.py": {
-                "passed": 0,
+                "passed": 10008,
                 "total": 10008
             }
         },
