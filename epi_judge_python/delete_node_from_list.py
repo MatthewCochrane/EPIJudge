@@ -7,18 +7,46 @@ from test_framework.test_utils import enable_executor_hook
 
 # Assumes node_to_delete is not tail.
 def deletion_from_list(node_to_delete: ListNode) -> None:
-    # TODO - you fill in here.
-    return
+    """
+    Start: 17:09
+
+    Delete a node in a singly linked list
+    It's guaranteed not to be the last node.
+    We must do this in O(1) time
+
+    a->b->c->d->e
+          x-delete this node
+    we can do this by copying d into c then pointing c to d.next
+    we couldn't do this if it was the last node
+
+    a->b->c->d->e
+                x-delete this node
+    to delete this node we really do need to point d somewhere different
+
+    Pseudo code
+    if node.next is None raise an Exception
+    copy the value of node.next into node
+    point node.next to node.next.next
+
+    O(1) time, O(1) space
+
+    Time: 17:14 -> about 5 mins.
+
+    """
+    if node_to_delete.next is None:
+        raise IndexError()
+    node_to_delete.data = node_to_delete.next.data
+    node_to_delete.next = node_to_delete.next.next
 
 
 @enable_executor_hook
 def deletion_from_list_wrapper(executor, head, node_to_delete_idx):
     node_to_delete = head
     if node_to_delete is None:
-        raise RuntimeError('List is empty')
+        raise RuntimeError("List is empty")
     for _ in range(node_to_delete_idx):
         if node_to_delete.next is None:
-            raise RuntimeError('Can\'t delete last node')
+            raise RuntimeError("Can't delete last node")
         node_to_delete = node_to_delete.next
 
     executor.run(functools.partial(deletion_from_list, node_to_delete))
@@ -26,8 +54,11 @@ def deletion_from_list_wrapper(executor, head, node_to_delete_idx):
     return head
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     exit(
-        generic_test.generic_test_main('delete_node_from_list.py',
-                                       'delete_node_from_list.tsv',
-                                       deletion_from_list_wrapper))
+        generic_test.generic_test_main(
+            "delete_node_from_list.py",
+            "delete_node_from_list.tsv",
+            deletion_from_list_wrapper,
+        )
+    )
