@@ -15,6 +15,9 @@ from test_framework.test_utils_console import (print_failed_test,
                                                print_test_info,
                                                show_complexity_notification)
 from test_framework.timeout_exception import TimeoutException
+import logging
+
+logger = logging.getLogger(__file__)
 
 
 def generic_test_main(test_file,
@@ -99,6 +102,7 @@ def run_tests(handler, config, res_printer):
         except RuntimeError:
             raise
         except Exception as exc:
+            logger.exception(exc)
             result = TestResult.UNKNOWN_EXCEPTION
             test_failure = TestFailure(exc.__class__.__name__).with_property(
                 PropertyName.EXCEPTION_MESSAGE, str(exc))
