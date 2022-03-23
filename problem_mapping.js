@@ -838,7 +838,7 @@ problem_mapping = {
                 "total": 203
             },
             "Python: is_list_palindromic.py": {
-                "passed": 0,
+                "passed": 203,
                 "total": 203
             }
         },
