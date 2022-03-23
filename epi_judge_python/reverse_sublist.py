@@ -3,8 +3,93 @@ from typing import Optional
 from list_node import ListNode
 from test_framework import generic_test
 
+# Equivalent leetcode question
+# https://leetcode.com/problems/reverse-linked-list-ii/solution/
+
 
 def reverse_sublist(L: ListNode, start: int, finish: int) -> Optional[ListNode]:
+    """
+    Start: 8:55
+    Reverse a sublist.
+    We get a LL, a start node number and a finish node number
+    reverse the nodes from the start to the finish inclusive
+
+    Example
+        1->2->3->4->5->6->7->8->9   start=2, end=5
+        1->5->4->3->2->6->7->8->9
+
+    Let's assume those nodes always exist.
+    So an empty list must have start=0, end=0.
+
+    If start is 0, end is 0 or L is None, then we do nothing and return L
+
+    Reversing...
+
+    1->2->3->4->5->6->7
+    1->2->3->4->5->6->7
+       |
+    1  2->3->4->5->6->7
+
+
+    Utility problem -> test knowledge, do you know it or not?
+    1st or second year question...
+    You need to know this well!
+    1->2->3->4->5->6->7
+
+
+    \---->/
+    b  sc    n
+       /---->\
+    1  2<-3->4->5->6->7
+    \---->/
+    b  s  c     n
+       /------->\
+    1  2<-3<-4  5->6->7
+    \------->/
+
+    b  s     c     n
+       /------->\
+    1  2<-3<-4  5->6->7
+    \------->/
+
+
+
+    b.next = c.next
+    c.next = c.next.next
+
+    b.next = c.next
+    s.next = c.next.next
+    c.next.next = c
+    c = b.next (move c forward)
+
+
+    First node will be the end...
+
+
+    """
+    if start == 0 or finish == 0:
+        return L
+
+    dummy = ListNode(None, L)
+    p, c = dummy, L
+    for _ in range(start - 1):
+        p, c = c, c.next
+    before_left = p
+    p, c = c, c.next
+
+    for _ in range(finish - start):
+        tmp = c.next
+        c.next = p
+        p, c = c, tmp
+
+    before_left.next.next = c
+    before_left.next = p
+    return dummy.next
+
+
+def reverse_sublist_first_attempt(
+    L: ListNode, start: int, finish: int
+) -> Optional[ListNode]:
     """
     Reverse the items in the linked list from start to finish inclusive
 
