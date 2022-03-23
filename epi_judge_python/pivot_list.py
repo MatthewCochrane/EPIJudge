@@ -88,22 +88,33 @@ def list_pivoting(head: Optional[ListNode], k: int) -> Optional[ListNode]:
             more_tail.next = cur
             more_tail = cur
         cur = cur.next
-    head, tail = None, None
-    for (pd, pt) in [
-        (less_dummy, less_tail),
-        (eq_dummy, eq_tail),
-        (more_dummy, more_tail),
-    ]:
-        if pd.next is None:
-            continue
-        if head is None:
-            head = pd.next
-        else:
-            tail.next = pd.next
-        tail = pt
-    if tail:
-        tail.next = None
-    return head
+
+    # This is a nicer way to do what I had written below
+    # the key is building the lists up in reverse.
+    # This removes a bunch of the edge cases around what
+    # to do if one of the lists is empty.
+    # Very useful to remember
+    more_tail.next = None
+    eq_tail.next = more_dummy.next
+    less_tail.next = eq_dummy.next
+    return less_dummy.next
+
+    # head, tail = None, None
+    # for (pd, pt) in [
+    #     (less_dummy, less_tail),
+    #     (eq_dummy, eq_tail),
+    #     (more_dummy, more_tail),
+    # ]:
+    #     if pd.next is None:
+    #         continue
+    #     if head is None:
+    #         head = pd.next
+    #     else:
+    #         tail.next = pd.next
+    #     tail = pt
+    # if tail:
+    #     tail.next = None
+    # return head
 
 
 def linked_to_list(l):
