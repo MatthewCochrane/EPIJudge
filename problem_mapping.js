@@ -852,7 +852,7 @@ problem_mapping = {
                 "total": 208
             },
             "Python: pivot_list.py": {
-                "passed": 0,
+                "passed": 208,
                 "total": 208
             }
         },
