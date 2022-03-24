@@ -109,20 +109,30 @@ class Queue:
 
         # 0 1 2 3
         #   |     x cap = 4
-        new_capacity = self._cap * 2
-        new_data: List[Optional[int]] = [None] * new_capacity
-        if self._head_idx > self._tail_idx:
-            # is slice assignment with an islice efficient???
-            new_data[: self._cap - self._head_idx] = islice(
-                self._data, self._head_idx, self._cap
-            )
-            new_data[self._cap - self._head_idx : self.size()] = islice(
-                self._data, self._tail_idx
-            )
-        else:
-            new_data[: self.size()] = islice(self._data, self._head_idx, self._tail_idx)
+
+        # This is a nicer way to do it. Does the same thing as the commented out bit below.
+        # The idea is:
+        # Rearrange the existing data into a new list of the same size
+        # Double the length by extending it with a new array of None values of the same length
+        self._data = self._data[self._head_idx :] + self._data[: self._head_idx]
         self._head_idx, self._tail_idx = 0, self.size()
-        self._data, self._cap = new_data, new_capacity
+        self._data.extend([None] * self._cap)
+        self._cap *= 2
+
+        # new_capacity = self._cap * 2
+        # new_data: List[Optional[int]] = [None] * new_capacity
+        # if self._head_idx > self._tail_idx:
+        #     # is slice assignment with an islice efficient???
+        #     new_data[: self._cap - self._head_idx] = islice(
+        #         self._data, self._head_idx, self._cap
+        #     )
+        #     new_data[self._cap - self._head_idx : self.size()] = islice(
+        #         self._data, self._tail_idx
+        #     )
+        # else:
+        #     new_data[: self.size()] = islice(self._data, self._head_idx, self._tail_idx)
+        # self._head_idx, self._tail_idx = 0, self.size()
+        # self._data, self._cap = new_data, new_capacity
 
 
 def queue_tester(ops):
