@@ -63,7 +63,9 @@ def is_balanced_binary_tree(tree: BinaryTreeNode) -> bool:
         )
         r = (
             node_height_and_balanced(node.right)
-            if node.right
+            if (
+                node.right and l.balanced
+            )  # improvement here, skip searching right subtree if left wasn't balanced!
             else HeightAndBalanced(0, True)
         )
         return HeightAndBalanced(
