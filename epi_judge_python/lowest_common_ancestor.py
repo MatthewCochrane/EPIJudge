@@ -12,6 +12,71 @@ def lca(
     tree: BinaryTreeNode, node0: BinaryTreeNode, node1: BinaryTreeNode
 ) -> Optional[BinaryTreeNode]:
     """
+    Trying again, wanted to do it the way the book suggested in their answer.
+
+    Want to find a lowest common ancestor
+
+    Example
+          a
+       b     c
+     d  e
+       f
+    LCA of f and d is b
+    LCA of e and c is a
+    LCA of e and e is e
+
+    Seems like a good question to solve recursively.
+    What information do we need to know at each node to know the LCA?
+    Well, if both nodes are in the subtree, then this is the LCA, assuming we work up from the bottom
+    Imagine returning the number of nodes in this subtree
+    for the tree above, if the nodes are f and d
+    nodes_found(c) = 0
+    nodes_found(f) = 1
+    nodes_found(e) = 1
+    nodes_found(d) = 1 (the node d, not f)
+    nodes_found(b) = 2 - therefore b must be the LCA!
+
+    Ok a recursive signature
+
+    def nodes_below(node) -> int
+        if (node is None) or lca:
+            # if lca is set just exit
+            # node is None is base case
+            return 0
+        nodes = int(node0 is node) + int(node1 is node)
+        nodes += nodes_below(node.left) + nodes_below(node.right)
+        if nodes == 2 and not lca:
+            lca = node
+        return nodes
+    nodes_below(tree)
+    return lca
+
+    Looks better than the other approach...
+    In the book, instead of lca being in a closure, it's returned as bart of the recursive function.
+    That's reasonable too...
+    """
+    lca = None
+
+    def nodes_below(node: Optional[BinaryTreeNode]) -> int:
+        nonlocal lca
+        if node is None or lca:
+            # if lca is set just exit
+            # node is None is base case
+            return 0
+        nodes = int(node0 is node) + int(node1 is node)
+        nodes += nodes_below(node.left) + nodes_below(node.right)
+        if nodes == 2 and not lca:
+            lca = node
+        return nodes
+
+    nodes_below(tree)
+    return lca
+
+
+def lca_first_attempt(
+    tree: BinaryTreeNode, node0: BinaryTreeNode, node1: BinaryTreeNode
+) -> Optional[BinaryTreeNode]:
+    """
     Start: 10:27
     Find the lowest common ancestor
 
