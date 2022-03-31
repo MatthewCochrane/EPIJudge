@@ -46,6 +46,28 @@ def merge_sorted_arrays(sorted_arrays: List[List[int]]) -> List[int]:
     Took 30 mins
 
     """
+
+
+    # Solution 3 - use iterators
+    # result = []
+    # iterators = [iter(l) for l in sorted_arrays]
+    # heap = []
+    # for i, it in enumerate(iterators):
+    #     val = next(it, None)
+    #     if val is not None:
+    #         heapq.heappush(heap, (val, i))
+    #
+    # while heap:
+    #     val, list_id = heapq.heappop(heap)
+    #     result.append(val)
+    #     if (next_val := next(iterators[list_id], None)) is not None:
+    #         heapq.heappush(heap, (next_val, list_id))
+    # return result
+
+    # Solution 2 - use heapq.merge!
+    # return list(heapq.merge(*sorted_arrays))
+
+    # Solution 1 - use an index in the array
     heap = []
     result = []
     for i, ary in enumerate(sorted_arrays):
