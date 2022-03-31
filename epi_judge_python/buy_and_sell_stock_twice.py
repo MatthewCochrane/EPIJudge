@@ -1,10 +1,112 @@
+import functools
 import math
-from typing import List
+from typing import List, Tuple
 
 from test_framework import generic_test
 
 
 def buy_and_sell_stock_twice(prices: List[float]) -> float:
+    """
+    Start: 08:51
+    Compute maximum profit from buying and selling a share at most twice.
+
+    3 2 5 8 4 5 6 9 1 2 3
+
+    O(n^2) options -> can enumerate all options and compare to find max profit
+
+    high - low
+
+    largest max after smallest min
+
+    pseudo code:
+    for buy/sell once
+
+    min_so_far = inf
+    best_profit = 0
+    for val in prices:
+        min_so_far = min(min_so_far, val)
+        best_profit = max(best_profit, val - min_so_far)
+    return best_profit
+
+    O(n) time, O(1) space
+
+    Now what if we want to buy and sell up to twice?
+
+    3 2 5 8 4 5 6 9 1 2 3
+
+    8
+    6+5 = 11
+    9
+    9
+    8
+    7
+    max = 11
+
+    Split the array?
+    Could split the array at every index and run the above algorithm on each half?
+    O(n^2) -> O(n) n times - Time complexity
+    O(1) space
+
+    states
+    start
+    onebuy
+    onesell
+    twobuys
+
+            3  2  5  8  4  5  6  9  1  2  3
+    wait0   0  0  0  0  0  0  0  0  0  0  0
+    (buy)
+    hold1  -3 -2 -2 -2 -2 -2 -2 -2 -1 -1 -1
+    (sell)
+    wait1   X -1  3  6  6  6  6  7  7  7  7
+    (buy)
+    hold2   X  X -6 -5  2  2  2  2  6  6  6
+    (sell)
+    wait2   X  X  X  2  2  7  8  11 11 11 11
+
+    result = max(0,-1,7,6,11)
+
+    if we only keep prev and next
+    O(1) space
+    O(n) time
+
+    Pseudo code
+    # state represents max profit so far in different situations
+    # (hold after 1 buy, wait after 1 sell, hold after 2 buys, wait after 2 sells)
+    initialise our state = (-inf, -inf, -inf, -inf)
+    def next_state(prev_state, price):
+        return (
+            max(prev_state[0], -price),
+            max(prev_state[1], prev_state[0] + price),
+            max(prev_state[2], prev_state[1] - price),
+            max(prev_state[3], prev_state[2] + price),
+        )
+    state = functools.reduce(next_state, prices)
+    return max(0, max(state))
+
+    All tests passed.
+    Finish: 9:37
+    36 mins . Not too bad...
+
+    """
+
+    def next_state(prev_state: Tuple, price: float) -> Tuple:
+        return (
+            max(prev_state[0], -price),
+            max(prev_state[1], prev_state[0] + price),
+            max(prev_state[2], prev_state[1] - price),
+            max(prev_state[3], prev_state[2] + price),
+        )
+
+    # state represents max profit so far in different situations
+    # (hold after 1 buy, wait after 1 sell, hold after 2 buys, wait after 2 sells)
+    final_state = functools.reduce(
+        next_state, prices, (-math.inf, -math.inf, -math.inf, -math.inf)
+    )
+    return max(0, max(final_state))
+
+
+def buy_and_sell_stock_twice_first_go(prices: List[float]) -> float:
     """
     A non-optimal O(n^2) solution...
 
