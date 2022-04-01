@@ -45,6 +45,7 @@ def search_smallest(A: List[int]) -> int:
         def __getitem__(self, i):
             return A[i] < A[0]
 
+    # Convert A into a sequence of falses before the start and true's after the start.
     return bisect_left(Helper(), True, 0, len(A)) % len(A)
 
 
