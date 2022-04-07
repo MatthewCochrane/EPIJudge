@@ -1406,7 +1406,7 @@ problem_mapping = {
                 "total": 503
             },
             "Python: kth_largest_in_array.py": {
-                "passed": 0,
+                "passed": 503,
                 "total": 503
             }
         },
@@ -1420,7 +1420,7 @@ problem_mapping = {
                 "total": 100
             },
             "Python: absent_value_array.py": {
-                "passed": 0,
+                "passed": 100,
                 "total": 100
             }
         },
