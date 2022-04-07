@@ -136,8 +136,6 @@ def find_missing_element(stream: Iterator[int]) -> int:
     So again this approach works well because there are lots of free values, if there are very few free values
     a different approach would be better.
 
-
-
     """
     candidates = set([random.randrange(2 ** 32) for _ in range(1000)])
     for val in stream:
