@@ -7,6 +7,73 @@ from test_framework import generic_test
 
 def buy_and_sell_stock_twice(prices: List[float]) -> float:
     """
+    Start: 9:18
+    Buy and sell a stock twice...
+
+    Buy, sell, buy sell
+    we can do nothing
+    we can buy & sell once
+    we can buy and sell twice
+
+    Will have some prices and need to work out the best time to buy and sell...
+
+    Use a state machine and keep track of best value
+
+    There are only 5 states
+    0 buy
+    1 buy
+    1 sell
+    2 buy
+    2 sell
+
+    we transition between the states
+    0 buy to 1 buy -> total profit = 0 - stock price at that time
+    1 buy to 1 sell -> total profit = prev profit in 1 buy state + stock price at that time
+    ... so on
+
+    at each point in time we ask if we were to take this action what's the best profit we could have at this point in
+    time?
+
+
+            6, 8, 9, 3, 4, 7, 8, 2, 9, 1
+    0 buy   0, 0, 0, 0  0, 0, 0, 0, 0, 1
+    1 buy  -6,-6,-6,-3,-3,-3,-3,-2,-2,-1
+    1 sell  X, 2, 3, 3, 3, 4, 5, 5, 7, 7
+    2 buy   X, X,-7, 0, 0, 0, 0, 3, 3, 6
+    2 sell  X, X, X,-4, 4, 7, 8, 8,12,12
+
+    # best profit after (1 buy, 1 sell, 2 buys, 2 sells)
+    state = (-inf, -inf, -inf, -inf)
+    for val in A:
+        state = (
+            max(state[0], -val), # buying
+            max(state[1], state[0] + val), # selling
+            max(state[2], state[1] - val), # buying
+            max(state[3], state[2] + val), # selling
+        )
+    return max(state)
+
+    O(n) time
+    O(1) space
+    Finish: 9:39
+    Not that useful I just 'knew' the answer.....
+
+
+    """
+
+    state = (-math.inf, -math.inf, -math.inf, -math.inf)
+    for val in prices:
+        state = (
+            max(state[0], -val),  # buying
+            max(state[1], state[0] + val),  # selling
+            max(state[2], state[1] - val),  # buying
+            max(state[3], state[2] + val),  # selling
+        )
+    return max(max(state), 0)
+
+
+def buy_and_sell_stock_twice_second(prices: List[float]) -> float:
+    """
     Start: 08:51
     Compute maximum profit from buying and selling a share at most twice.
 
