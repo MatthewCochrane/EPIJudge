@@ -5,6 +5,42 @@ from test_framework import generic_test
 
 def can_reach_end(A: List[int]) -> bool:
     """
+    Start: 8:17
+    The i'th entry in A is the max we can advance from i
+    return whether it's possible to reach the last index
+     |
+    [3,3,1,0,2,0,1]
+     |
+
+    [9,8,7,6,5,9,3,2,1,0,1]
+               |
+    lwi = 5
+
+    for each item in reverse
+        if any item we can reach from this item is true (can reach end) then this is true
+        val = true if we can reach a spot that can get to the end
+
+    O(n^2) time
+    O(n) space
+
+    What's the furthest distance we can get?
+    leftmost_winning_idx = last index
+    for each item in reverse:
+        if idx + val > leftmost_winning_idx:
+            leftmost_val = idx
+
+    Seems like there could be a better time complexity answer!
+    Why is this O(n^2) best case???
+    """
+    leftmost_winning_idx = len(A) - 1
+    for i in reversed(range(len(A) - 1)):
+        if i + A[i] >= leftmost_winning_idx:
+            leftmost_winning_idx = i
+    return leftmost_winning_idx == 0
+
+
+def can_reach_end_first_go(A: List[int]) -> bool:
+    """
     Start 17:27
     integer -> maximum you can advance from that position in one move.
     Write a program which takes array of n ints, and returns whether it's possible
@@ -51,8 +87,9 @@ def can_reach_end(A: List[int]) -> bool:
     return earliest == 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     exit(
-        generic_test.generic_test_main('advance_by_offsets.py',
-                                       'advance_by_offsets.tsv',
-                                       can_reach_end))
+        generic_test.generic_test_main(
+            "advance_by_offsets.py", "advance_by_offsets.tsv", can_reach_end
+        )
+    )
