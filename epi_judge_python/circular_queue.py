@@ -1,8 +1,154 @@
-from itertools import islice
 from typing import Optional, List
 
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
+
+"""
+Repeating this question as it was tricky last time...
+Time: 9:45
+
+Use an array to implement a circular buffer (circular queue).
+The queue should dynamically resize if we exceed the capacity.
+
+cap = 5
+0 1 2 3 4
+2,3,5,7,X
+h t     
+
+enqueue at the head
+dequeue from the tail
+
+when empty we'd expect head and tail to be at the same place
+interestingly this is the same when the queue is full!
+
+def __init__(capacity)
+    if cap == 0 raise error
+    ary = [None] * capacity
+    head = tail = 0
+    size = 0
+    
+def enqueue(val):
+    if size == capacity: raise exception -> full
+    ary[head] = val
+    head += 1
+    head %= capacity
+    size += 1
+
+def dequeue():
+    if size == 0 raise an exception IndexError
+    val = ary[tail]
+    tail += 1
+    tail %= capacity
+    size -= 1
+    return val
+
+def size()
+    return size
+
+def resize():
+    if tail < head:
+        move from tail to head-1 into start of array
+    else: # head <= tail
+        move ary[tail:] to start of array
+        move ary[:h] to start after the tail bit
+        ary[:size] = ary[tail:] + ary[:head]
+        
+
+add empty values to the end of the array
+    
+    
+    
+Pseudo without resizing at 9:56    
+
+0,1,2,3,4,5,6,7,8
+    h     t
+5,6,7,8,0,1,2,X,X
+    t h
+2,3,X,X,X,X,X,X,X
+    th  full
+2,3,4,5,6,7,8,0,1
+
+assume that it's not empty!
+   
+if tail < head:
+    move from tail to head-1 into start of array
+else: # head <= tail
+    move ary[tail:] to start of array
+    move ary[:h] to start after the tail bit
+
+add empty values to the end of the array
+
+All tests passed.
+Finished at 10:21
+36 mins
+
+
+Better...
+
+"""
+
+def test_queue():
+    q = Queue(4)
+    assert q.size() == 0
+    q.enqueue(1)
+    assert q.size() == 1
+    q.enqueue(2)
+    q.enqueue(3)
+    q.enqueue(4)
+    assert q.dequeue() == 1
+    assert q.dequeue() == 2
+    assert q.dequeue() == 3
+    assert q.dequeue() == 4
+    print(q._ary)
+    q.enqueue(5)
+    q.enqueue(6)
+    q.enqueue(7)
+    q.enqueue(8)
+    q.enqueue(9)
+    print(q._ary)
+    assert q.dequeue() == 5
+    print("PASS")
+
+
+class Queue:
+    def __init__(self, capacity: int) -> None:
+        if capacity == 0:
+            raise ValueError()
+        self._capacity = capacity
+        self._ary = [0] * self._capacity
+        self._head = self._tail = 0
+        self._size = 0
+
+    def enqueue(self, x: int) -> None:
+        if self._size == self._capacity:
+            self._resize()
+        self._ary[self._head] = x
+        self._head += 1
+        self._head %= self._capacity
+        self._size += 1
+
+    def dequeue(self) -> int:
+        if self._size == 0:
+            raise IndexError()
+        x = self._ary[self._tail]
+        self._tail += 1
+        self._tail %= self._capacity
+        self._size -= 1
+        return x
+
+    def size(self) -> int:
+        return self._size
+
+    def _resize(self) -> None:
+        if self._tail < self._head:
+            self._ary[: self._size] = self._ary[self._tail : self._head]
+        else:  # head <= tail
+            self._ary[: self._size] = self._ary[self._tail :] + self._ary[: self._head]
+        self._head = self._size
+        self._tail = 0
+        self._ary += [0] * self._capacity
+        self._capacity *= 2
+
 
 """
 Start: 16:58
@@ -66,7 +212,7 @@ Ok, finished at 18:04 with a lot of debugging.  Absolutely need to redo this que
 """
 
 
-class Queue:
+class Queue_FirstGo:
     def __init__(self, capacity: int) -> None:
         self._cap = capacity
         self._data: List[Optional[int]] = [None] * self._cap
@@ -155,6 +301,7 @@ def queue_tester(ops):
                 raise TestFailure("Size: expected " + str(arg) + ", got " + str(result))
         else:
             raise RuntimeError("Unsupported queue operation: " + op)
+
 
 
 if __name__ == "__main__":
