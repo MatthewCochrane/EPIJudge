@@ -20,6 +20,14 @@ def permutations(A: List[int]) -> List[List[int]]:
         3 ways to swap the last two
         when there are two there are only two options
 
+        Every permutation of A begins with one ov the values of A.
+        Once we pick a first value, there are now A-1 values to pick and we see a subproblem.
+        Basically the answer is
+        starting value + permutations(remaining values) for each starting value
+        the base case is that if there are no remaining values return an empty permutation
+        We can do this more efficiently though as this approach builds the result bottom up.
+        if we use backtracking we can build the results top-down.
+
         permutations(A) A with two items
             result.add(A)
             swap A
