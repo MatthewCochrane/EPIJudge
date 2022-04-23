@@ -16,8 +16,28 @@ class Name:
 
 
 def eliminate_duplicate(A: List[Name]) -> None:
-    # TODO - you fill in here.
-    return
+    """
+    Start: 9:37
+    we have a list of names (First, Last)
+    remove the items from A that have duplicate first names.
+
+    If this was about ints like remove duplicates from an int list we'd just do
+    set(A)
+
+    Ok, so in general, we can do this in O(n) time if we use O(n) extra space for a set/dict.
+    If we want to do this with less than O(n) space we would need to sort the array and could do it in O(n log n) time.
+
+
+
+    """
+    first_names = set()
+    result = []
+    for name in A:
+        if name.first_name not in first_names:
+            first_names.add(name.first_name)
+            result.append(name)
+    A[:] = result
+
 
 
 @enable_executor_hook
