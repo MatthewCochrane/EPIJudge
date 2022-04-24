@@ -16,7 +16,32 @@ class Team:
     # Checks if team0 can be placed in front of team1.
     @staticmethod
     def valid_placement_exists(team0: 'Team', team1: 'Team') -> bool:
-        # TODO - you fill in here.
+        """
+        888
+        999
+
+        678
+        678
+
+        678
+        567
+
+        678
+        577
+
+        team 1
+        team 0
+        team 0 must be < team 1
+        Arrange both teams in ascending order.
+        iterate through and check each pair.
+
+        O(n log n) and O(n) so O(n log n)
+        """
+        t0 = sorted([p.height for p in team0._players])
+        t1 = sorted([p.height for p in team1._players])
+        for p0, p1 in zip(t0, t1):
+            if p0 >= p1:
+                return False
         return True
 
 
