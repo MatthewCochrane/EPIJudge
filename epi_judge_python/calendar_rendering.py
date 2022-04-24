@@ -77,20 +77,24 @@ def find_max_simultaneous_events(A: List[Event]) -> int:
     # Approach 2 - list of endpoints. 401us avg, 9us median
     START = 0
     END = 1
-    endpoints = []
-    for event in A:
-        # Start
-        endpoints.append((event[0], START))
-        # End
-        endpoints.append((event[1], END))
+    # After looking at the answer, here's a slightly nicer way to write the 6 lines below.
+    endpoints = [(event[0], START) for event in A] + [(event[1], END) for event in A]
+    # endpoints = []
+    # for event in A:
+    #     # Start
+    #     endpoints.append((event[0], START))
+    #     # End
+    #     endpoints.append((event[1], END))
     concurrent_events = 0
     max_concurrent = 0
     for time, endpoint_type in sorted(endpoints):
         if endpoint_type == START:
             concurrent_events += 1
+            # Moving this line in here instead of down below improves the performance slightly
+            max_concurrent = max(max_concurrent, concurrent_events)
         else:  # if
             concurrent_events -= 1
-        max_concurrent = max(max_concurrent, concurrent_events)
+        # max_concurrent = max(max_concurrent, concurrent_events)
     return max_concurrent
 
     # Approach 1 - heap.  370us avg, 9us median
