@@ -93,6 +93,9 @@ def group_by_age(people: List[Person]) -> None:
         swap the items
         update the to_location's count (-= 1) and offset
         if the count was zero, delete it from the dict
+
+    Did very poorly at this.  Need to repeat.  Took me almost 2 hours and I had to look at the answer.
+    I need to work out how to do those cyclic or in-place array rearranges.  More questions like that!
     """
     # 423142334231
     # counts = {1:2,2:3,3:4,4:3}
