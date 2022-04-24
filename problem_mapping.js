@@ -1732,7 +1732,7 @@ problem_mapping = {
                 "total": 33
             },
             "Python: group_equal_entries.py": {
-                "passed": 0,
+                "passed": 33,
                 "total": 33
             }
         },
