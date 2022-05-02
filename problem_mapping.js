@@ -2044,7 +2044,7 @@ problem_mapping = {
                 "total": 120
             },
             "Python: combinations.py": {
-                "passed": 0,
+                "passed": 120,
                 "total": 120
             }
         },
@@ -2072,7 +2072,7 @@ problem_mapping = {
                 "total": 522
             },
             "Python: enumerate_palindromic_decompositions.py": {
-                "passed": 0,
+                "passed": 522,
                 "total": 522
             }
         },
@@ -2086,7 +2086,7 @@ problem_mapping = {
                 "total": 10
             },
             "Python: enumerate_trees.py": {
-                "passed": 0,
+                "passed": 10,
                 "total": 10
             }
         },
